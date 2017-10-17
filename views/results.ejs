@@ -1,0 +1,18 @@
+<% include ./partials/header %>
+<div class="ui container segment">
+    <h1><%= poll.title %></h1>
+    <% for(var i = 1; i < fields.length; i++) { %>
+        <% var count = 0 %>
+        <h3><%= fields[i] %>:
+            <% for(var k = 0; k < votes.length; k++) { %>
+                <% if(fields[i] === votes[k][0]) { %>
+                    <% count++ %>
+                <% } %>
+            <% } %>
+            <%= count %>
+        </h3>
+    <% } %>
+    <a class="ui button red" href="/polls/<%= poll._id %>">Back</a>
+    <a class="ui button simple"><i class="ui user"></i>Account</a>
+</div>
+<% include ./partials/footer %>

@@ -1,0 +1,21 @@
+<% include ./partials/header %>
+
+<div class="ui centered segmented grid">
+    <div class="ui eight wide column segment">
+        <h1><%= poll.title %></h1>
+        <hr>
+        <br>
+        <form class="ui form" method="POST" action="/<%= poll._id %>/vote">
+            <% for(var i = 1; i < poll.fields.length; i++) { %>
+                    <div id="selection-div" class="ui checkbox">
+                        <input type="checkbox" name="<%= poll.fields[i] %>">
+                        <label id="selection"><%= poll.fields[i] %></label>
+                    </div>
+            <% } %>
+            <button class="ui button blue">Vote!</button>
+            <a class="ui button simple right floated" href="/results/<%= poll._id %>">View Current Results</a>
+        </form>
+    </div>
+</div>
+
+<% include ./partials/footer %>

@@ -1,0 +1,17 @@
+body {
+    background: azure;
+    padding: 2%;
+}
+
+#vote-check {
+    margin-left: 2%;
+}
+
+#selection-div {
+    display: block;
+    margin: 2%;
+}
+
+#selection {
+    font-size: 18px;
+}

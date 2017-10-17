@@ -1,0 +1,17 @@
+<% include ./partials/header %>
+    <div class="ui main container segment">
+        <h1 class="ui main header">Create new Poll</h1>
+        
+        <form class="ui form" method="POST" action="/polls">
+            <div id="field-container">
+                <input class="field" type="text" name="title" placeholder="Your Question!">
+                <input class="field" type="text" name="field">
+            </div>
+            <button id="add-field" class="ui button blue"><i class="ui plus icon"></i>New Field</button>
+            <button class="ui button green">Submit Poll</button>
+        </form>
+    </div>
+
+    <script type="text/javascript" src="/scripts/scripts.js"></script>
+    <body>
+<html>

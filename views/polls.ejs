@@ -1,0 +1,12 @@
+<% include ./partials/header %>
+<div class="ui padded container segment">
+    <h1 class="ui main header huge"> Poll List </h1>
+        <% polls.forEach(function(poll) { %>
+            <div>
+                <a href="/polls/<%= poll._id %>"><h5><%= poll.title %></h5></a>
+                <hr>
+                <br>
+            </div>
+        <% }) %>
+</div>
+<% include ./partials/footer %>
