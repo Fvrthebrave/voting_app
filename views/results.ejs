@@ -1,6 +1,6 @@
 <% include ./partials/header %>
 <div class="ui container segment">
-    <h1><%= poll.title %></h1>
+    <h1>Current votes for: <%= poll.title %></h1>
     <% for(var i = 1; i < fields.length; i++) { %>
         <% var count = 0 %>
         <h3><%= fields[i] %>:
@@ -12,7 +12,7 @@
             <%= count %>
         </h3>
     <% } %>
-    <a class="ui button red" href="/polls/<%= poll._id %>">Back</a>
+    <a class="ui button basic" href="/polls/<%= poll._id %>">Back</a>
     <a class="ui button simple"><i class="ui user"></i>Account</a>
 </div>
 <% include ./partials/footer %>
