@@ -2,9 +2,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     User = require('./models/user-schema'),
     Poll = require('./models/poll-schema'),
+    flash = require('connect-flash'),
     mongoose = require('mongoose'),
     passport = require('passport'),
     localStrategy = require('passport-local'),
+    middleware = require('./middleware/index'),
     app = express();
     
 
@@ -13,6 +15,7 @@ mongoose.connect('mongodb://localhost/voting_app');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
+app.use(flash());
 
 /**************Passport Config***************************/
 app.use(require('express-session') ({
@@ -35,25 +38,87 @@ app.use(function(req, res, next) {
     next();
 });
 
-// CREATE
-app.post('/polls', function(req, res) {
-    Poll.create({}, function(err, newPoll) {
+/************CREATE*********************/
+app.post('/polls', middleware.isLoggedIn, function(req, res) {
+    User.findOne({username: req.user.username}, function(err, user) {
         if(err) {
             console.log(err);
         } else {
-            newPoll.title = req.body.title;
-            newPoll.fields = Object.values(req.body);
-            
-            newPoll.save();
-            res.redirect('/polls');
+            Poll.create({}, function(err, newPoll) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    newPoll.title = req.body.title;
+                    newPoll.fields = Object.values(req.body);
+                    newPoll.author = req.user;
+                    
+                    newPoll.save();
+                    
+                    user.polls.push(newPoll);
+                    user.save();
+                    
+                    res.redirect('/polls');
+                }
+            }); 
         }
     });
+
 });    
 
-
-// READ
+/*************READ**********************/
 app.get('/', function(req, res) {
     res.render('home'); 
+});
+
+app.get('/profile/:id', function(req, res) {
+    User.findById(req.params.id).populate("polls").exec(function(err, user) {
+        if(err) {
+            console.log(err);
+        } else {
+            res.render('profile', { user : user });
+        }
+    });
+});
+
+// Login
+app.get('/login', function(req, res) {
+    res.render('login'); 
+});
+
+app.post('/login', passport.authenticate("local",
+    {
+        successRedirect: "/profile",
+        failureRedirect: "/login"
+    }), function(req, res) {
+       req.flash("success", "You have successfully logged in!"); 
+});
+
+// Logout
+app.get('/logout', function(req, res) {
+    req.logout();
+    req.flash("success", "You have successfully logged out!");
+    res.redirect('/');
+});
+
+// Register
+app.get('/register', function(req, res) {
+    res.render('register');
+});
+
+app.post('/register', function(req, res) {
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user) {
+        if(err) {
+            req.flash("error", err.message + "!");
+            return res.redirect('/register');
+        } else {
+            console.log('Account created!');
+            passport.authenticate("local")(req, res, function() {
+                req.flash("success", "You have successfully created an account for " + user.username);
+                return res.redirect('/profile');
+            });
+        }
+    });
 });
 
 app.get('/polls', function(req, res) {

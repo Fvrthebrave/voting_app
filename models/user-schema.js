@@ -11,6 +11,12 @@ var userSchema = new mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref: "Poll"
       }   
+   ],
+   polls: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "Poll"
+      }   
    ]
 });
 
