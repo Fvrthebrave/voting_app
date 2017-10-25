@@ -4,6 +4,7 @@ var express = require('express'),
     Poll = require('./models/poll-schema'),
     flash = require('connect-flash'),
     mongoose = require('mongoose'),
+    moment = require('moment'),
     passport = require('passport'),
     localStrategy = require('passport-local'),
     middleware = require('./middleware/index'),
@@ -51,6 +52,7 @@ app.post('/polls', middleware.isLoggedIn, function(req, res) {
                     newPoll.title = req.body.title;
                     newPoll.fields = Object.values(req.body);
                     newPoll.author = req.user;
+                    newPoll.dateCreated = moment().format('MMMM DD, YYYY');
                     
                     newPoll.save();
                     
@@ -162,18 +164,35 @@ app.get("*", function(req, res) {
     res.redirect('/');
 });
 
-app.post('/:id/vote', function(req, res) {
-    Poll.findById(req.params.id, function(err, poll) {
+app.post('/:id/vote', middleware.isLoggedIn, function(req, res) {
+    User.findById(req.user._id).populate("hasVoted").exec(function(err, user) {
+        
+        console.log(checkIfVoted(user, req.params.id));
+        
         if(err) {
             console.log(err);
-        } else if(Object.keys(req.body).length === 0) {
-            res.redirect('/polls/' + poll._id);
+        } else if(checkIfVoted(user, req.params.id)) {
+            console.log(checkIfVoted(user, req.params.id));
+            req.flash("error", "You have already voted on this poll!");
+            res.redirect('back');
         } else {
-            poll.votes.push(Object.keys(req.body));
-            poll.save();
-            
-            console.log('User has voted!', poll);
-            res.redirect('/results/' + req.params.id);
+            Poll.findById(req.params.id, function(err, poll) {
+                if(err) {
+                    console.log(err);
+                } else if(Object.keys(req.body).length === 0) {
+                    res.redirect('/polls/' + poll._id);
+                } else {
+                    poll.votes.push(Object.keys(req.body));
+                    poll.save();
+                    
+                    user.hasVoted.push(poll);
+                    user.save();
+        
+                    console.log('User has voted!', poll);
+                    
+                    res.redirect('/results/' + req.params.id);
+                }
+            });
         }
     });
 });
@@ -183,3 +202,16 @@ app.post('/:id/vote', function(req, res) {
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log('Server is listening..'); 
 });
+
+
+function checkIfVoted(user, pollId) {
+    var voted = false;
+    for(var i = 0; i < user.hasVoted.length; i++) {
+        if(user.hasVoted[i]._id.toString() === pollId) {
+            voted = true;
+            break;
+        }
+    }
+    
+    return voted;
+}

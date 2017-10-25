@@ -7,7 +7,8 @@ var pollSchema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
-    }
+    },
+    dateCreated : String
 });
 
 module.exports = mongoose.model("Poll", pollSchema);

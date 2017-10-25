@@ -1,6 +1,6 @@
 <% include ./partials/header %>
 
-<div class="ui centered segmented grid">
+<div class="ui padded centered segmented grid">
     <div class="ui eight wide column segment">
         <h1><%= poll.title %></h1>
         <hr>
@@ -14,7 +14,9 @@
             <% } %>
             <a class="ui button basic" href="/polls">Back</a>
             <a class="ui button simple" href="/results/<%= poll._id %>">View Current Results</a>
-            <button class="ui button blue right floated">Vote!</button>
+            <% if(currentUser) { %>
+                <button class="ui button blue right floated">Vote!</button>
+            <% } %>
         </form>
     </div>
 </div>

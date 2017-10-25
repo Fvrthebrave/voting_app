@@ -1,7 +1,7 @@
 <% include ./partials/header %>
 
 <div class="ui main segment container">
-    <div class="ui main header"><%= user.username %>'s Profile</div>
+    <div class="ui main header"><%= user.username %>'s Polls</div>
     <% user.polls.forEach(function(poll) { %>
         <a href="/polls/<%= poll._id %>"><%= poll.title %></a>
         <hr>

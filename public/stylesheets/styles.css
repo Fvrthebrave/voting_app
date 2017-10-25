@@ -15,3 +15,7 @@ body {
 #selection {
     font-size: 18px;
 }
+
+#logout {
+    background: pink;
+}
