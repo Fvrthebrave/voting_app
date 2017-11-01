@@ -191,7 +191,7 @@ app.post('/:id/vote', middleware.isLoggedIn, function(req, res) {
                     user.hasVoted.push(poll);
                     user.save();
         
-                    console.log('User has voted!', poll);
+                    console.log('User has voted!', poll, user);
                     
                     res.redirect('/results/' + req.params.id);
                 }
