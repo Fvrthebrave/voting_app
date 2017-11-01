@@ -1,6 +1,6 @@
 body {
     background: azure;
-    padding: 2%;
+    padding: 5%;
 }
 
 #vote-check {
@@ -18,4 +18,20 @@ body {
 
 #logout {
     background: pink;
+}
+
+#title-spacer {
+    margin-bottom: 5% !important;
+}
+
+#poll-form {
+    margin-top: 2% !important;
+}
+
+.field-spacer {
+    margin: 0 0 1% !important;
+}
+
+.top-spacer {
+    margin-top: 2% !important;
 }

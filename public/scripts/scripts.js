@@ -8,5 +8,6 @@ addButton.addEventListener("click", function(e) {
     var newField = document.createElement("input");
     newField.style.display = "block";
     newField.name = "field" + fieldCount;
+    newField.className += "field-spacer";
     fieldContainer.appendChild(newField);
 });
