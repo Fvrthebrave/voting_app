@@ -4,6 +4,9 @@
     <div class="ui main header"><%= user.username %>'s Polls</div>
     <% user.polls.forEach(function(poll) { %>
         <a href="/polls/<%= poll._id %>"><%= poll.title %></a>
+        <form method="POST" action="/profile/<%= user._id %>/<%= poll._id %>/delete?_method=DELETE">
+            <input type="submit" class="ui button red small right-set" value="Delete">
+        </form>
         <hr>
         <br>
     <% }); %>

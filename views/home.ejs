@@ -9,7 +9,7 @@
             <a class="ui button simple" href="/profile/<%= currentUser._id %>">My Polls</a>
         </div>
         <div class ="ui center aligned segment">
-            <h2>Created Polls: <%= currentUser.polls.length %></h2>
+            <h2>Total Created Polls: <%= currentUser.polls.length %></h2>
             <h2>Total Votes: <%= currentUser.hasVoted.length %></h2>
         </div
         <% } else { %>

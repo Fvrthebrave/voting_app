@@ -35,3 +35,7 @@ body {
 .top-spacer {
     margin-top: 2% !important;
 }
+
+.right-set {
+    margin-left: 90% !important;
+}

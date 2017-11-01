@@ -7,6 +7,7 @@ var express = require('express'),
     moment = require('moment'),
     passport = require('passport'),
     localStrategy = require('passport-local'),
+    methodOverride = require('method-override'),
     middleware = require('./middleware/index'),
     app = express();
     
@@ -15,6 +16,7 @@ mongoose.connect(process.env.DATABASEURL);
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(flash());
 
@@ -70,6 +72,23 @@ app.post('/polls', middleware.isLoggedIn, function(req, res) {
 
 });    
 
+// Register new account
+app.post('/register', function(req, res) {
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user) {
+        if(err) {
+            req.flash("error", err.message + "!");
+            return res.redirect('/register');
+        } else {
+            console.log('Account created!');
+            passport.authenticate("local")(req, res, function() {
+                req.flash("success", "You have successfully created an account for " + user.username);
+                return res.redirect('/profile');
+            });
+        }
+    });
+});
+
 /*************READ**********************/
 app.get('/', function(req, res) {
     res.render('home'); 
@@ -83,11 +102,6 @@ app.get('/profile/:id', function(req, res) {
             res.render('profile', { user : user });
         }
     });
-});
-
-// Login
-app.get('/login', function(req, res) {
-    res.render('login'); 
 });
 
 app.post('/login', passport.authenticate("local",
@@ -105,26 +119,16 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+// Login
+app.get('/login', function(req, res) {
+    res.render('login'); 
+});
+
 // Register
 app.get('/register', function(req, res) {
     res.render('register');
 });
 
-app.post('/register', function(req, res) {
-    var newUser = new User({username: req.body.username});
-    User.register(newUser, req.body.password, function(err, user) {
-        if(err) {
-            req.flash("error", err.message + "!");
-            return res.redirect('/register');
-        } else {
-            console.log('Account created!');
-            passport.authenticate("local")(req, res, function() {
-                req.flash("success", "You have successfully created an account for " + user.username);
-                return res.redirect('/profile');
-            });
-        }
-    });
-});
 
 app.get('/polls', function(req, res) {
     Poll.find({}, function(err, polls) {
@@ -196,6 +200,20 @@ app.post('/:id/vote', middleware.isLoggedIn, function(req, res) {
                     res.redirect('/results/' + req.params.id);
                 }
             });
+        }
+    });
+});
+
+
+/******************* DESTROY **************************/
+app.delete('/profile/:id/:pollId/delete', function(req, res) {
+    Poll.findByIdAndRemove(req.params.pollId, function(err, poll) {
+        if(err) {
+            req.flash("error", "An error occurred!");
+            console.log(err);
+        } else {
+            req.flash("success", "Poll successfully removed!");
+            res.redirect('/profile/' + req.params.id);
         }
     });
 });
