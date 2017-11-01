@@ -214,8 +214,25 @@ app.delete('/profile/:id/:pollId/delete', function(req, res) {
         } else {
             req.flash("success", "Poll successfully removed!");
             res.redirect('/profile/' + req.params.id);
+            
+            User.findById(req.params.id, function(err, user) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    var index = user.polls.indexOf(req.params.pollId);
+                    console.log(index);
+                    
+                    if(index > -1) {
+                        user.polls.splice(index, 1);
+                        user.save();
+                    }
+                    
+                    console.log(user);
+                }
+            });
         }
-    });
+    });  
+
 });
 
 
