@@ -41,6 +41,7 @@ app.use(function(req, res, next) {
 
 /************CREATE*********************/
 app.post('/polls', middleware.isLoggedIn, function(req, res) {
+    console.log(req.body);
     User.findOne({username: req.user.username}, function(err, user) {
         if(err) {
             console.log(err);
@@ -50,7 +51,9 @@ app.post('/polls', middleware.isLoggedIn, function(req, res) {
                     console.log(err);
                 } else {
                     newPoll.title = req.body.title;
-                    newPoll.fields = Object.values(req.body);
+                    newPoll.fields = Object.keys(req.body).map(function(field) {
+                        return req.body[field];
+                    });
                     newPoll.author = req.user;
                     newPoll.dateCreated = moment().format('MMMM DD, YYYY');
                     
