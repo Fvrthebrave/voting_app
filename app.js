@@ -11,8 +11,7 @@ var express = require('express'),
     app = express();
     
 
-mongoose.connect('mongodb://Fvrthebrave:Eclipse99$@ds243335.mlab.com:43335/voting_app');
-//mongodb://Fvrthebrave:Eclipse99$@ds243335.mlab.com:43335/voting_app
+mongoose.connect(process.env.DATABASEURL);
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
