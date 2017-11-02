@@ -25,6 +25,11 @@ body {
     margin-top: 2% !important;
 }
 
+#chart_div {
+    width: 90%;
+    height: 50%;
+}
+
 .field-spacer {
     margin: 0 0 1% !important;
 }
@@ -34,10 +39,16 @@ body {
 }
 
 .right-set {
-    margin-left: 90% !important;
+    margin-left: 92% !important;
 }
 
 .selection-div {
     display: block !important;
     margin-bottom: 3%;
+}
+
+@media screen and (max-width: 600px) {
+    .right-set {
+        margin-left: 75% !important;
+    }   
 }
