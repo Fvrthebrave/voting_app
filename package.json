@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Fvrthebrave/voting_app#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "chart.js": "^2.7.1",
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",

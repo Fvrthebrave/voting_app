@@ -1,18 +1,96 @@
-<% include ./partials/header %>
-<div class="ui container segment">
-    <h1>Current votes for: <%= poll.title %></h1>
-    <% for(var i = 1; i < fields.length; i++) { %>
-        <% var count = 0 %>
-        <h3><%= fields[i] %>:
-            <% for(var k = 0; k < votes.length; k++) { %>
-                <% if(fields[i] === votes[k][0]) { %>
-                    <% count++ %>
-                <% } %>
+<html>
+    <head>
+        <title>Voting App</title>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        
+        <script type="text/javascript">
+          
+          var poll = <%- JSON.stringify(poll) %>;
+          // Load the Visualization API and the corechart package.
+          google.charts.load('current', {'packages':['corechart']});
+    
+          // Set a callback to run when the Google Visualization API is loaded.
+          google.charts.setOnLoadCallback(drawChart);
+    
+          // Callback that creates and populates a data table,
+          // instantiates the pie chart, passes in the data and
+          // draws it.
+          function drawChart() {
+    
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            var newColumn = [];
+            var newRow = [];
+            
+            data.addColumn('string', 'Fields')
+            data.addColumn('number', 'Votes')
+            
+            
+            for(var i = 1; i < poll.fields.length; i++) {
+                var count = 0;
+                
+
+                
+                for(var k = 0; k < poll.votes.length; k++) {
+                    if(poll.fields[i].toString() === poll.votes[k].toString()) {
+                        count++;
+                    }
+                }
+                
+                data.addRows([
+                    [poll.fields[i], count]    
+                ]);
+            }
+            
+            // for(var i = 0; i < poll.votes.length; i++) {
+            //     newRow.push(poll.votes[i]);
+            //     data.addRow('number', newRow[i]);
+            // }
+
+    
+            // Set chart options
+            var options = {'width':1000,
+                           'height':400};
+    
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+          }
+        </script>
+
+    </head>
+        
+    <body>
+        
+        <% if(error && error.length > 0) { %>
+            <div class="ui negative message center aligned segment" role="alert">
+                <%= error %>
+            </div>
+        <% } %>
+        <% if(success && success.length > 0) { %>
+            <div class="ui positive message center aligned segment" role="alert">
+                <%= success %>
+            </div>
+        <% } %>    
+        <div class="ui three item menu">
+            <a class="item" href="/"><i class="home icon"></i></a>
+            <a class="item" href="/polls"><i class="ui list icon"></i>All Polls</a>
+            <% if(!currentUser) { %>
+              <a class="item" href="/login"><i class="user icon"></i>Login</a>
+            <% } else { %>
+              <a id="logout" class="item" href="/logout"><i class="window close icon"></i>Logout</a>
             <% } %>
-            <%= count %>
-        </h3>
-    <% } %>
-    <a class="ui button basic" href="/polls/<%= poll._id %>">Back</a>
-    <a class="ui button simple"><i class="ui user"></i>Account</a>
-</div>
-<% include ./partials/footer %>
+        </div>
+        
+        <!--Div that holds our chart -->
+        <div class="ui padded centered container segment">
+            <h2 class="ui main header"><%= poll.title %></h2>
+            <div id="chart_div"></div>
+        </div>
+
+    
+    
+    </body>
+</html>

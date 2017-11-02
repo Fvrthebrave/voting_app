@@ -11,10 +11,10 @@ var express = require('express'),
     middleware = require('./middleware/index'),
     app = express();
     
-
 mongoose.connect(process.env.DATABASEURL);
 
 app.set('view engine', 'ejs');
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
