@@ -87,7 +87,12 @@
         <!--Div that holds our chart -->
         <div class="ui padded centered container segment">
             <h2 class="ui main header"><%= poll.title %></h2>
-            <div id="chart_div"></div>
+            <% if(poll.votes.length >= 1) { %>
+                <div id="chart_div"></div>
+            <% } else { %>
+                <div class="ui main header">There are currently no votes for this poll!</div>
+            <% } %>
+            <a class="ui button basic" href="javascript:history.back()">Back</a>
         </div>
 
     
