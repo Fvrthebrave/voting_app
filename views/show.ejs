@@ -7,7 +7,7 @@
         <br>
         <form class="ui form" method="POST" action="/<%= poll._id %>/vote">
             <% for(var i = 1; i < poll.fields.length; i++) { %>
-                    <div id="selection-div" class="ui checkbox">
+                    <div class="ui checkbox selection-div">
                         <input type="checkbox" name="<%= poll.fields[i] %>">
                         <label id="selection"><%= poll.fields[i] %></label>
                     </div>
