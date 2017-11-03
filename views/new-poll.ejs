@@ -6,10 +6,11 @@
             <form class="ui form" method="POST" action="/polls">
                 <div id="field-container">
                     <label>Poll title</label>
-                    <input id="title-spacer" class="field" type="text" name="title">
+                    <input id="title-spacer" class="field" type="text" name="title" required>
                     
                     <label>Fields</label>
-                    <input class="field field-spacer" type="text" name="field">
+                    <input class="field field-spacer" type="text" name="field" required>
+                    <input class="field field-spacer" type="text" name="field2" required>
                 </div>
                 <button id="add-field" class="ui button blue left floated top-spacer"><i class="ui plus icon"></i>New Field</button>
                 <button class="ui button basic left floated top-spacer">Submit Poll</button>

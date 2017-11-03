@@ -43,7 +43,26 @@ app.use(function(req, res, next) {
 
 /************CREATE*********************/
 app.post('/polls', middleware.isLoggedIn, function(req, res) {
-    console.log(req.body);
+    var testFields = Object.keys(req.body).map(function(field) {
+        return req.body[field];
+    }); 
+    
+    for(var i = 1; i < testFields.length; i++ ) {
+        var matchTest = testFields[i];
+        var pos = testFields.indexOf(matchTest);
+        var indices = [];
+        
+        while(pos !== -1) {
+            indices.push(pos);
+            pos = testFields.indexOf(matchTest, pos + 1);
+        }
+        
+        if(indices.length > 1) {
+            req.flash("error", "No duplicate fields!");
+            return res.redirect('/new');
+        }
+    }
+    
     User.findOne({username: req.user.username}, function(err, user) {
         if(err) {
             console.log(err);
@@ -150,7 +169,7 @@ app.get('/polls/:id', function(req, res) {
     });
 });
 
-app.get('/new', function(req, res) {
+app.get('/new', middleware.isLoggedIn,function(req, res) {
     res.render('new-poll'); 
 });
 

@@ -1,6 +1,6 @@
 var addButton = document.getElementById("add-field");
 var fieldContainer = document.getElementById("field-container");
-var fieldCount = 1;
+var fieldCount = 2;
 
 addButton.addEventListener("click", function(e) {
     e.preventDefault();
