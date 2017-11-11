@@ -21,10 +21,9 @@
     </div>
 </div>
 <script>
+    // The following code will prevent multiple boxes from being checked
     var checkboxes = document.getElementsByTagName('input');
     var currentBox;
-    
-    console.log(checkboxes.length);
     
     for(let i = 0; i < checkboxes.length; i++) {
         checkboxes[i].addEventListener('change', function() {
