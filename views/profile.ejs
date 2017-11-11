@@ -2,15 +2,17 @@
 
 <div class="ui main segment container">
     <div class="ui main header"><%= user.username %>'s Polls</div>
-    <% user.polls.forEach(function(poll) { %>
-        <a href="/polls/<%= poll._id %>"><%= poll.title %></a>
-        <form method="POST" action="/profile/<%= user._id %>/<%= poll._id %>/delete?_method=DELETE">
-            <input type="submit" class="ui button red small right-set" value="Delete">
-        </form>
-        <hr>
-        <br>
-    <% }); %>
-    <a class="ui button simple" href="/home">Back</a>
+    <div id="user-polls-div">
+        <% user.polls.forEach(function(poll) { %>
+            <a href="/polls/<%= poll._id %>"><%= poll.title %></a>
+            <form method="POST" action="/profile/<%= user._id %>/<%= poll._id %>/delete?_method=DELETE">
+                <input type="submit" class="ui button red small right-set" value="Delete">
+            </form>
+            <hr>
+            <br>
+        <% }); %>
+        <a class="ui button simple" href="/home">Back</a>
+    </div>
 </div>
 
 <% include ./partials/footer %>

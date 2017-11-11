@@ -30,6 +30,10 @@ body {
     height: 50%;
 }
 
+#user-polls-div {
+    padding: 5%;
+}
+
 .center-hr {
     width: 20%;
 }
@@ -43,7 +47,7 @@ body {
 }
 
 .right-set {
-    margin-left: 92% !important;
+    margin-left: 90% !important;
 }
 
 .selection-div {
