@@ -10,8 +10,10 @@
         </div>
         <div class ="ui center aligned segment">
             <h2>Total Created Polls: <%= currentUser.polls.length %></h2>
+            <hr class="center-hr">
             <h2>Total Votes: <%= currentUser.hasVoted.length %></h2>
-        </div
+            <hr class="center-hr">
+        </div>
         <% } else { %>
             <div class="ui center aligned segment">
                 <h1>Please login to view your dashboard!</h1>

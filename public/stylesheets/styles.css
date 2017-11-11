@@ -30,6 +30,10 @@ body {
     height: 50%;
 }
 
+.center-hr {
+    width: 20%;
+}
+
 .field-spacer {
     margin: 0 0 1% !important;
 }

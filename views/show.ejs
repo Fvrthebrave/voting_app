@@ -20,5 +20,28 @@
         </form>
     </div>
 </div>
+<script>
+    var checkboxes = document.getElementsByTagName('input');
+    var currentBox;
+    
+    console.log(checkboxes.length);
+    
+    for(let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].addEventListener('change', function() {
+            if(checkboxes[i].checked) {
+                currentBox = i;
+                console.log(currentBox);
+            }
+            
+            for(let k = 0; k < checkboxes.length; k++) {
+                if(k !== currentBox) {
+                    checkboxes[k].checked = false;
+                }
+            }
+        });
+    }
+    
+    
+</script>
 
 <% include ./partials/footer %>
