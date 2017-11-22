@@ -55,6 +55,11 @@ body {
     margin-bottom: 3%;
 }
 
+#main-header {
+    color: white;
+    font-size: 42px;
+}
+
 @media screen and (max-width: 600px) {
     .right-set {
         margin-left: 75% !important;
