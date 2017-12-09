@@ -9,6 +9,7 @@ var express = require('express'),
     localStrategy = require('passport-local'),
     methodOverride = require('method-override'),
     middleware = require('./middleware/index'),
+    expressSanitized = require('express-sanitized'),
     app = express();
     
 mongoose.connect(process.env.DATABASEURL);
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
+app.use(expressSanitized());
 app.use(flash());
 
 /**************Passport Config***************************/
@@ -43,6 +45,8 @@ app.use(function(req, res, next) {
 
 /************CREATE*********************/
 app.post('/polls', middleware.isLoggedIn, function(req, res) {
+    console.log(req.body);
+    
     var testFields = Object.keys(req.body).map(function(field) {
         return req.body[field];
     }); 
