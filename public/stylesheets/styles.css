@@ -5,6 +5,10 @@ body {
     padding: 5%;
 }
 
+#show-div {
+    margin-top: 2% !important;
+}
+
 #vote-check {
     margin-left: 2%;
 }
@@ -63,5 +67,10 @@ body {
 @media screen and (max-width: 600px) {
     .right-set {
         margin-left: 75% !important;
-    }   
+    }
+    
+    button {
+        display: block !important;
+        margin: 3% !important;
+    }
 }
