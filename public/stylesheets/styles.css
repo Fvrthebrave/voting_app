@@ -5,10 +5,6 @@ body {
     padding: 5%;
 }
 
-#show-div {
-    margin-top: 2% !important;
-}
-
 #vote-check {
     margin-left: 2%;
 }
@@ -69,8 +65,20 @@ body {
         margin-left: 75% !important;
     }
     
+    .dash-button {
+        display: block !important;
+        width: 100%;
+        margin-top: 2% !important;
+    }
+    
     button {
         display: block !important;
-        margin: 3% !important;
+        width: 100%;
+        margin-top: 2% !important;
+    }
+    
+    a {
+        display: block !important;
+        width: 100%;
     }
 }

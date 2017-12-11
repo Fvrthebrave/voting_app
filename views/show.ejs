@@ -12,10 +12,10 @@
                     <label id="selection"><%= poll.fields[i] %></label>
                 </div>
         <% } %>
-        <a class="ui button basic" href="/polls">Back</a>
-        <a class="ui button simple" href="/results/<%= poll._id %>">View Current Results</a>
+        <a class="ui button basic dash-button" href="/polls">Back</a>
+        <a class="ui button simple dash-button" href="/results/<%= poll._id %>">View Current Results</a>
         <% if(currentUser) { %>
-            <button class="ui button blue right floated">Vote!</button>
+            <button class="ui button blue">Vote!</button>
         <% } %>
     </form>
 </div>

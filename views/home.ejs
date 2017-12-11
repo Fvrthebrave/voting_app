@@ -5,8 +5,8 @@
         <div class="ui center aligned segment">
             <h1>Dashboard</h1>
             <br>
-            <a class="ui button blue" href="/new">New Poll</a>
-            <a class="ui button simple" href="/profile/<%= currentUser._id %>">My Polls</a>
+            <a class="ui button blue dash-button" href="/new">New Poll</a>
+            <a class="ui button simple dash-button" href="/profile/<%= currentUser._id %>">My Polls</a>
         </div>
         <div class ="ui center aligned segment">
             <h2>Total Created Polls: <%= currentUser.polls.length %></h2>
